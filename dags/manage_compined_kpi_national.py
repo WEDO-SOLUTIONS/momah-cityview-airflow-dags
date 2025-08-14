@@ -1,16 +1,16 @@
 import logging
-
 import pendulum
 
 from airflow.decorators import dag, task
 from airflow.models.variable import Variable
 from airflow.exceptions import AirflowException
+from airflow.models.param import Param  # <-- 1. ADDED THIS IMPORT
 
 # Import the framework components
 from include.pro_sync_framework.config import DagConfig
 from include.pro_sync_framework.db_utils import DbHook
 from include.pro_sync_framework.helpers import build_schema_from_db, build_payload
-from plugins.hooks.pro_hook import ProHook
+from hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
@@ -34,8 +34,15 @@ except Exception as e:
     - **UPDATE**: Rebuilds schema & filters and updates the existing asset.
     - **CLEAR_ALL_DATA**: Deletes all data from the asset.
     """,
+    # 2. UPDATED THIS SECTION TO USE THE PARAM CLASS
     params={
-        "operation": {"type": "string", "enum": ["CREATE", "UPDATE", "CLEAR_ALL_DATA"]},
+        "operation": Param(
+            "CREATE",  # Default value in the dropdown
+            type="string",
+            enum=["CREATE", "UPDATE", "CLEAR_ALL_DATA"],
+            title="Operation to Perform",
+            description="Choose the asset management task to run."
+        ),
     },
 )
 def manage_asset_dag():
