@@ -1,4 +1,5 @@
 import logging
+
 import pendulum
 
 from airflow.decorators import dag, task
