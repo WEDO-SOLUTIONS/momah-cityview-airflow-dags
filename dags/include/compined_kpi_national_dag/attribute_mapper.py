@@ -19,8 +19,8 @@ ATTRIBUTE_MAPPER: Dict[str, Dict[str, Any]] = {
     "inspectedstreetarea": {"en": "Inspected Street Area", "ar": "مساحة الشوارع المغطاه", "type": "string", "mandatory": False},
 
     # Inspection metrics
-    "units": {"en": "Inspection Units", "ar": "الوحدات", "type": "string", "mandatory": False},
-    "cov": {"en": "Coverage Ratio", "ar": "نسبة التغطية", "type": "number", "mandatory": True},
-    "vpi": {"en": "Visual Pavement Index", "ar": "مؤشر الرصف المرئي", "type": "number", "mandatory": True}
+    "units": {"en": "Units", "ar": "الوحدات", "type": "string", "mandatory": False},
+    "cov": {"en": "Coverage", "ar": "التغطية", "type": "number", "mandatory": True},
+    "vpi": {"en": "VP Index", "ar": "مؤشر التشوه البصري", "type": "number", "mandatory": True}
 
 }
