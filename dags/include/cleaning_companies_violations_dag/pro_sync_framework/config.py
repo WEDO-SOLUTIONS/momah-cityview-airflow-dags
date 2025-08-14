@@ -11,7 +11,7 @@ class DagConfig:
 
     def __init__(self, dag_prefix: str, config_dir: str = "dags/configs"):
         self.dag_prefix = dag_prefix.lower()
-        dags_root_path = Path(__file__).parent.parent.parent
+        dags_root_path = Path(__file__).parent.parent.parent.parent
         config_path = dags_root_path / "configs" / f"{self.dag_prefix}.env"
 
         if not config_path.exists():
