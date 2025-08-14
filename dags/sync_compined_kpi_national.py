@@ -104,7 +104,7 @@ def sync_data_dag():
                 log.info("No more records to process from the database.")
                 break
 
-            cols = [d[0].lower() for d in db_hook.hook.get_description()]
+            cols = [d[0].lower() for d in db_hook.hook.last_description]
             features = []
             for row in records:
                 row_dict = dict(zip(cols, row))
