@@ -35,7 +35,7 @@ class DbHook:
 
     def get_all_pks(self, table_name: str, pk_columns: List[str]) -> List[Tuple]:
         """Fetches all primary key values from the source table."""
-        pk_cols_str = ", ".join([f'"{c}"' for c in pk_columns])
+        pk_cols_str = ", ".join(pk_columns)
         sql = f"SELECT {pk_cols_str} FROM {table_name}"
         return self.hook.get_records(sql)
 
