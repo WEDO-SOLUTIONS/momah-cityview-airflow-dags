@@ -11,7 +11,8 @@ class DagConfig:
 
     def __init__(self, dag_prefix: str, config_dir: str = "dags/configs"):
         self.dag_prefix = dag_prefix.lower()
-        config_path = Path(os.environ["AIRFLOW_HOME"]) / config_dir / f"{self.dag_prefix}.env"
+        dags_root_path = Path(__file__).parent.parent.parent
+        config_path = dags_root_path / "configs" / f"{self.dag_prefix}.env"
 
         if not config_path.exists():
             raise AirflowConfigException(f"Configuration file not found at: {config_path}")
