@@ -58,7 +58,7 @@ def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[
             name_attr["type"] = "name"
             attributes.append(name_attr)
 
-        if col in ("latitude", "longitude") or col in config.primary_key_columns:
+        if col in ("latitude", "longitude"): # or col in config.primary_key_columns:
             continue
 
         filter_obj: Dict[str, Any] = {"attribute_id": col}
