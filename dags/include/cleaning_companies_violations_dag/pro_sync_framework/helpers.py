@@ -8,7 +8,7 @@ from airflow.models import Variable
 from dateutil.parser import parse as date_parse
 
 # IMPORTANT: Adjust the import path based on your final structure
-from attribute_mapper import ATTRIBUTE_MAPPER
+from include.cleaning_companies_violations_dag.attribute_mapper import ATTRIBUTE_MAPPER
 from config import DagConfig
 from db_utils import DbHook
 
