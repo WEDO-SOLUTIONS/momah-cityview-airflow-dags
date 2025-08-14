@@ -10,7 +10,7 @@ from airflow.models.param import Param  # <-- 1. ADDED THIS IMPORT
 from include.pro_sync_framework.config import DagConfig
 from include.pro_sync_framework.db_utils import DbHook
 from include.pro_sync_framework.helpers import build_schema_from_db, build_payload
-from hooks.pro_hook import ProHook
+from plugins.hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
