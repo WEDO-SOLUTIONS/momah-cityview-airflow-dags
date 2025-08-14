@@ -13,8 +13,8 @@ ATTRIBUTE_MAPPER: Dict[str, Dict[str, Any]] = {
     "municipality_id": {"en": "Municipality ID", "ar": "معرف البلدية", "type": "string", "mandatory": False},
     
     # Area measurements
-    "street_area": {"en": "Total Street Area", "ar": "إجمالي مساحة الشوارع", "type": "string", "mandatory": False},
-    "inspected_street_area": {"en": "Inspected Street Area", "ar": "مساحة الشوارع المغطاه", "type": "string", "mandatory": False},
+    "streetarea": {"en": "Total Street Area", "ar": "إجمالي مساحة الشوارع", "type": "string", "mandatory": False},
+    "inspectedstreetarea": {"en": "Inspected Street Area", "ar": "مساحة الشوارع المغطاه", "type": "string", "mandatory": False},
 
     # Inspection metrics
     "units": {"en": "Inspection Units", "ar": "الوحدات", "type": "string", "mandatory": False},

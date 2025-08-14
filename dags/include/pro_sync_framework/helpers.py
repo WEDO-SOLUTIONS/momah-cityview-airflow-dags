@@ -18,7 +18,15 @@ log = logging.getLogger(__name__)
 def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Dynamically builds the asset attributes and filters from the database view."""
     log.info(f"Building schema from database view: {config.db_view_name}")
-    raw_cols = db_hook.get_column_names(config.db_view_name)
+    
+    # Get the raw column description first to preserve original casing for SQL
+    with db_hook.hook.get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT * FROM {config.db_view_name} WHERE 1=0")
+            # raw_cols will be like ['DATETIME', 'MUNICIPALITY_ID', 'VPI']
+            raw_cols = [desc[0] for desc in cur.description]
+    
+    # cols will be like ['datetime', 'municipality_id', 'vpi']
     cols = [c.lower() for c in raw_cols]
     
     primary_col = config.asset_config.get("primary_name_column", "").lower()
@@ -26,9 +34,8 @@ def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[
     attributes: List[Dict[str, Any]] = []
     filters: List[Dict[str, Any]] = []
 
-    # Hardcoded date range for date filters, can be made dynamic if needed
-    MIN_DATE_MS = 315522000000  # Approx 1980
-    MAX_DATE_MS = 2524597200000 # Approx 2050
+    MIN_DATE_MS = 315522000000
+    MAX_DATE_MS = 2524597200000
 
     for raw_col, col in zip(raw_cols, cols):
         if col not in ATTRIBUTE_MAPPER:
@@ -37,7 +44,6 @@ def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[
         
         map_info = ATTRIBUTE_MAPPER[col]
         
-        # 1. Build attribute entry (same as before)
         attr = {
             "id": col,
             "type": map_info.get("type", "string"),
@@ -52,17 +58,15 @@ def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[
             name_attr["type"] = "name"
             attributes.append(name_attr)
 
-        # Skip geometry and PK columns from being filters
         if col in ("latitude", "longitude") or col in config.primary_key_columns:
             continue
 
-        # 2. Build filter entry (logic now restored)
         filter_obj: Dict[str, Any] = {"attribute_id": col}
         try:
             col_type = map_info.get("type", "string")
             
+            # ✨ FIX: Use the 'raw_col' with original casing in all SQL queries
             if col_type == "string":
-                # If a string has few distinct values, make it a dropdown list
                 count_sql = f'SELECT COUNT(DISTINCT "{raw_col}") FROM {config.db_view_name}'
                 distinct_count = db_hook.hook.get_first(count_sql)[0] or 0
                 
@@ -78,18 +82,15 @@ def build_schema_from_db(config: DagConfig, db_hook: DbHook) -> Tuple[List[Dict[
                 filter_obj.update({"control_type": "date_time_range", "min": MIN_DATE_MS, "max": MAX_DATE_MS})
 
             elif col_type == "number":
-                # For numbers, create a min/max range slider
                 range_sql = f'SELECT MIN("{raw_col}"), MAX("{raw_col}") FROM {config.db_view_name}'
                 min_val, max_val = db_hook.hook.get_first(range_sql)
                 
                 if min_val is not None and max_val is not None:
                     filter_obj.update({"control_type": "range", "min": float(min_val), "max": float(max_val)})
                 else:
-                    # Fallback if no data
                     continue
             
             else:
-                # Skip creating a filter for unhandled types
                 continue
         
         except Exception as e:
