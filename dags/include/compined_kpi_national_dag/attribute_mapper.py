@@ -1,14 +1,16 @@
 from typing import Dict, Any
 
 # This dictionary maps DB column names to their display properties for street inspection data
-ATTRIBUTE_MAPPER: Dict[str, Dict[str, Any]] = {
+ATTRIBUTE_MAPPER: Dict[str, Dict[str, Any]] = { 
 
     # Core date and location fields (fixed position)
     "datetime": {"en": "Date", "ar": "التاريخ", "type": "date_time", "mandatory": True},
 
     "latitude": {"en": "Latitude", "ar": "خط العرض", "type": "number", "mandatory": True},
     "longitude": {"en": "Longitude", "ar": "خط الطول", "type": "number", "mandatory": True},
-    
+
+    "amana_name_ar": {"en": "Amana Name AR", "ar": "اسم الأمانة بالعربية", "type": "string", "mandatory": False},
+
     # Administrative information
     "municipality_id": {"en": "Municipality ID", "ar": "معرف البلدية", "type": "string", "mandatory": False},
     
