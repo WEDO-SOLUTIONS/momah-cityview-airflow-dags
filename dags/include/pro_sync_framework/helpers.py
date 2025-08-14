@@ -8,7 +8,7 @@ from airflow.models import Variable
 from dateutil.parser import parse as date_parse
 
 # IMPORTANT: Adjust the import path based on your final structure
-from include.external_entities_dag.attribute_mapper import ATTRIBUTE_MAPPER
+from include.compined_kpi_national_dag.attribute_mapper import ATTRIBUTE_MAPPER
 from include.pro_sync_framework.config import DagConfig
 from include.pro_sync_framework.db_utils import DbHook
 

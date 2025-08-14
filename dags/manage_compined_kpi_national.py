@@ -12,9 +12,9 @@ from plugins.hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
-# Load configuration for the 'external_entities' DAG
+# Load configuration for the 'compined_kpi_national' DAG
 try:
-    config = DagConfig('external_entities')
+    config = DagConfig('compined_kpi_national')
 except Exception as e:
     log.error(f"Failed to load DAG configuration: {e}")
     # DAG will not be parsed if config fails
