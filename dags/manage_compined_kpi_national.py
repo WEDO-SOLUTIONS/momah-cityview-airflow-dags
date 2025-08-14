@@ -1,5 +1,7 @@
 import logging
-from pendulum import datetime
+
+import pendulum
+
 from airflow.decorators import dag, task
 from airflow.models.variable import Variable
 from airflow.exceptions import AirflowException
@@ -22,7 +24,7 @@ except Exception as e:
 
 @dag(
     dag_id=config.dag_id_manage,
-    start_date=datetime.fromisoformat(config.start_date),
+    start_date=pendulum.parse(config.start_date),
     schedule=None,
     catchup=False,
     tags=config.tags,
