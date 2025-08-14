@@ -8,15 +8,15 @@ from airflow.models.variable import Variable
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.exceptions import AirflowException
 
-from include.compined_kpi_national_dag.pro_sync_framework.config import DagConfig
-from include.compined_kpi_national_dag.pro_sync_framework.db_utils import DbHook
-from include.compined_kpi_national_dag.pro_sync_framework.helpers import validate_and_convert_row, generate_composite_pk
+from include.cleaning_companies_violations_dag.pro_sync_framework.config import DagConfig
+from include.cleaning_companies_violations_dag.pro_sync_framework.db_utils import DbHook
+from include.cleaning_companies_violations_dag.pro_sync_framework.helpers import validate_and_convert_row, generate_composite_pk
 from plugins.hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
 try:
-    config = DagConfig('compined_kpi_national')
+    config = DagConfig('cleaning_companies_violations')
 except Exception as e:
     log.error(f"Failed to load DAG configuration: {e}")
     raise

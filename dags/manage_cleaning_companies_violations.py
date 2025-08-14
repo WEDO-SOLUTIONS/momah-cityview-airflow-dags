@@ -5,19 +5,19 @@ import pendulum
 from airflow.decorators import dag, task
 from airflow.models.variable import Variable
 from airflow.exceptions import AirflowException
-from airflow.models.param import Param  # <-- 1. ADDED THIS IMPORT
+from airflow.models.param import Param
 
 # Import the framework components
-from include.compined_kpi_national_dag.pro_sync_framework.config import DagConfig
-from include.compined_kpi_national_dag.pro_sync_framework.db_utils import DbHook
-from include.compined_kpi_national_dag.pro_sync_framework.helpers import build_schema_from_db, build_payload
+from include.cleaning_companies_violations_dag.pro_sync_framework.config import DagConfig
+from include.cleaning_companies_violations_dag.pro_sync_framework.db_utils import DbHook
+from include.cleaning_companies_violations_dag.pro_sync_framework.helpers import build_schema_from_db, build_payload
 from plugins.hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
-# Load configuration for the 'compined_kpi_national' DAG
+# Load configuration for the 'cleaning_companies_violations' DAG
 try:
-    config = DagConfig('compined_kpi_national')
+    config = DagConfig('cleaning_companies_violations')
 except Exception as e:
     log.error(f"Failed to load DAG configuration: {e}")
     # DAG will not be parsed if config fails
