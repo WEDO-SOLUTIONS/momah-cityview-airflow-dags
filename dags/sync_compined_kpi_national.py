@@ -2,6 +2,7 @@ import logging
 
 import pendulum
 
+from typing import List
 from airflow.decorators import dag, task
 from airflow.models.variable import Variable
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
