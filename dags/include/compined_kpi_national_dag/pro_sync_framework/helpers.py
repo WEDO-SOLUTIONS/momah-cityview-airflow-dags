@@ -9,8 +9,8 @@ from dateutil.parser import parse as date_parse
 
 # IMPORTANT: Adjust the import path based on your final structure
 from include.compined_kpi_national_dag.attribute_mapper import ATTRIBUTE_MAPPER
-from config import DagConfig
-from db_utils import DbHook
+from include.compined_kpi_national_dag.pro_sync_framework.config import DagConfig
+from include.compined_kpi_national_dag.pro_sync_framework.db_utils import DbHook
 
 log = logging.getLogger(__name__)
 

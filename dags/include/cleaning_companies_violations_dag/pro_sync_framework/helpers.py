@@ -9,8 +9,8 @@ from dateutil.parser import parse as date_parse
 
 # IMPORTANT: Adjust the import path based on your final structure
 from include.cleaning_companies_violations_dag.attribute_mapper import ATTRIBUTE_MAPPER
-from config import DagConfig
-from db_utils import DbHook
+from include.cleaning_companies_violations_dag.pro_sync_framework.config import DagConfig
+from include.cleaning_companies_violations_dag.pro_sync_framework.db_utils import DbHook
 
 log = logging.getLogger(__name__)
 
