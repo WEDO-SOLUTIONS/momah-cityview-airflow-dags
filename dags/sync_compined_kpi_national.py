@@ -9,7 +9,7 @@ from airflow.exceptions import AirflowException
 from include.pro_sync_framework.config import DagConfig
 from include.pro_sync_framework.db_utils import DbHook
 from include.pro_sync_framework.helpers import validate_and_convert_row, generate_composite_pk
-from plugins.hooks.pro_hook import ProHook
+from hooks.pro_hook import ProHook
 
 log = logging.getLogger(__name__)
 
